@@ -16,7 +16,7 @@ struct ContentView: View {
 	// MARK: - View Body
     var body: some View {
         
-		TimelineView(.animation) { timeline in
+		TimelineView(.animation(minimumInterval: 1 / 20)) { timeline in
 			Canvas {
 				context,
 				size in
@@ -32,7 +32,7 @@ struct ContentView: View {
 				let hourHandLength = radius / 2.5
 				let minuteHandLength = radius / 1.5
 				
-				let secondHandLength = radius / 1.1
+				let secondHandLength = radius * 1.1
 				let secondHandWidth = radius / 25
 				
 				context.stroke(
@@ -62,9 +62,9 @@ struct ContentView: View {
 				context.fill(secondLine, with: .color(.orange))
 				
 				let centerPiece = Circle().path(in: rect.insetBy(dx: centerSize, dy: centerSize))
-				
+				context.blendMode = .clear
 				context.fill(centerPiece, with: .color(.white))
-				
+				context.blendMode = .normal
 				context.stroke(centerPiece, with: .color(.orange), lineWidth: centerSize)
 			}
 		}
